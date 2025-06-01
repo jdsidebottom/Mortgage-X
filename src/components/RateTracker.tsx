@@ -66,7 +66,7 @@ const RateTracker = () => {
   }, [currentRates, isLoading, rateHistory]);
 
   // Calculate rate changes
-  const getRateChange = (current: number, history: RateHistory[]) => {
+  const getRateChange = (_: number, history: RateHistory[]) => {
     if (history.length < 2) return { value: 0, direction: 'neutral' };
     
     const yesterday = history[history.length - 2];
@@ -190,7 +190,7 @@ const RateTracker = () => {
                       </tr>
                     </thead>
                     <tbody className="bg-white dark:bg-dark-100 divide-y divide-gray-200 dark:divide-gray-700">
-                      {rateHistory.map((item, index) => (
+                      {rateHistory.map((item) => (
                         <tr key={item.date} className="hover:bg-gray-50 dark:hover:bg-dark-200">
                           <td className="px-4 py-2 whitespace-nowrap text-xs text-gray-600 dark:text-gray-400">
                             {new Date(item.date).toLocaleDateString()}
