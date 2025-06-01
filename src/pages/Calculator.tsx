@@ -5,7 +5,7 @@ import AffordabilityCalculator from '../components/AffordabilityCalculator';
 
 const Calculator = () => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
