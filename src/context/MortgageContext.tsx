@@ -57,32 +57,37 @@ export function MortgageProvider({ children }: { children: ReactNode }) {
     setAmortizationSchedule(schedule);
   }, [mortgageDetails]);
 
-  // Simulate fetching current mortgage rates
+  // Fetch current mortgage rates
   useEffect(() => {
     const fetchRates = async () => {
       setIsLoading(true);
-      // Simulate API call with timeout
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // In a real app, you would fetch from an API
-      // For now, we'll use slightly randomized rates
-      const randomFactor = Math.random() * 0.5 - 0.25; // -0.25 to +0.25
-      
-      setCurrentRates({
-        thirtyYearFixed: parseFloat((defaultRates.thirtyYearFixed + randomFactor).toFixed(2)),
-        fifteenYearFixed: parseFloat((defaultRates.fifteenYearFixed + randomFactor).toFixed(2)),
-        fiveOneArm: parseFloat((defaultRates.fiveOneArm + randomFactor).toFixed(2)),
-        sevenOneArm: parseFloat((defaultRates.sevenOneArm + randomFactor).toFixed(2)),
-        lastUpdated: new Date().toISOString(),
-      });
-      
-      setIsLoading(false);
+      try {
+        // Simulate API call with timeout
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // In a real app, you would fetch from an API
+        // For now, we'll use slightly randomized rates
+        const randomFactor = Math.random() * 0.5 - 0.25; // -0.25 to +0.25
+        
+        setCurrentRates({
+          thirtyYearFixed: parseFloat((defaultRates.thirtyYearFixed + randomFactor).toFixed(2)),
+          fifteenYearFixed: parseFloat((defaultRates.fifteenYearFixed + randomFactor).toFixed(2)),
+          fiveOneArm: parseFloat((defaultRates.fiveOneArm + randomFactor).toFixed(2)),
+          sevenOneArm: parseFloat((defaultRates.sevenOneArm + randomFactor).toFixed(2)),
+          lastUpdated: new Date().toISOString(),
+        });
+      } catch (error) {
+        console.error("Error fetching mortgage rates:", error);
+        // In case of error, we'll use the default rates
+      } finally {
+        setIsLoading(false);
+      }
     };
     
     fetchRates();
     
-    // Refresh rates every 30 minutes
-    const intervalId = setInterval(fetchRates, 30 * 60 * 1000);
+    // Refresh rates every 5 minutes to simulate real-time updates
+    const intervalId = setInterval(fetchRates, 5 * 60 * 1000);
     return () => clearInterval(intervalId);
   }, []);
 

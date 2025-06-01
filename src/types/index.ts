@@ -50,3 +50,10 @@ export interface EducationalTip {
   content: string;
   category: 'basic' | 'advanced' | 'strategy';
 }
+
+export interface RateHistoryItem {
+  date: string;
+  thirtyYearFixed: number;
+  fifteenYearFixed: number;
+  fiveOneArm: number;
+}
