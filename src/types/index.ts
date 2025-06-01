@@ -6,6 +6,7 @@ export interface MortgageDetails {
   propertyTax: number;
   homeInsurance: number;
   pmi: number;
+  hoaFee: number;
   extraPayments: ExtraPayment[];
   startDate: Date;
 }

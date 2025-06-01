@@ -14,17 +14,18 @@ const MortgageSummary = () => {
     totalInterest 
   } = useMortgage();
   
-  const { loanAmount, propertyTax, homeInsurance, pmi } = mortgageDetails;
+  const { loanAmount, propertyTax, homeInsurance, pmi, hoaFee } = mortgageDetails;
   
   // Calculate monthly components
-  const monthlyPrincipalAndInterest = monthlyPayment - (propertyTax / 12) - (homeInsurance / 12) - (pmi / 12);
+  const monthlyPrincipalAndInterest = monthlyPayment - (propertyTax / 12) - (homeInsurance / 12) - (pmi / 12) - (hoaFee / 12);
   const monthlyPropertyTax = propertyTax / 12;
   const monthlyHomeInsurance = homeInsurance / 12;
   const monthlyPMI = pmi / 12;
+  const monthlyHOA = hoaFee / 12;
   
   // Chart data
   const chartData = {
-    labels: ['Principal', 'Interest', 'Property Tax', 'Insurance', 'PMI'],
+    labels: ['Principal', 'Interest', 'Property Tax', 'Insurance', 'PMI', 'HOA'],
     datasets: [
       {
         data: [
@@ -32,21 +33,24 @@ const MortgageSummary = () => {
           totalInterest,
           propertyTax * mortgageDetails.loanTerm,
           homeInsurance * mortgageDetails.loanTerm,
-          pmi * mortgageDetails.loanTerm
+          pmi * mortgageDetails.loanTerm,
+          hoaFee * mortgageDetails.loanTerm
         ],
         backgroundColor: [
           'rgba(14, 165, 233, 0.8)',
           'rgba(139, 92, 246, 0.8)',
           'rgba(249, 115, 22, 0.8)',
           'rgba(16, 185, 129, 0.8)',
-          'rgba(239, 68, 68, 0.8)'
+          'rgba(239, 68, 68, 0.8)',
+          'rgba(234, 179, 8, 0.8)'
         ],
         borderColor: [
           'rgba(14, 165, 233, 1)',
           'rgba(139, 92, 246, 1)',
           'rgba(249, 115, 22, 1)',
           'rgba(16, 185, 129, 1)',
-          'rgba(239, 68, 68, 1)'
+          'rgba(239, 68, 68, 1)',
+          'rgba(234, 179, 8, 1)'
         ],
         borderWidth: 1,
       },
@@ -119,6 +123,12 @@ const MortgageSummary = () => {
               <div className="flex justify-between">
                 <span className="text-sm text-gray-600 dark:text-gray-400">PMI</span>
                 <span className="text-sm font-medium text-gray-800 dark:text-gray-200">{formatCurrency(monthlyPMI)}</span>
+              </div>
+            )}
+            {monthlyHOA > 0 && (
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-600 dark:text-gray-400">HOA Fee</span>
+                <span className="text-sm font-medium text-gray-800 dark:text-gray-200">{formatCurrency(monthlyHOA)}</span>
               </div>
             )}
           </div>

@@ -303,6 +303,25 @@ const MortgageForm = () => {
                 className="input-field"
               />
             </div>
+            
+            {/* HOA Fee */}
+            <div>
+              <div className="flex justify-between mb-1">
+                <label htmlFor="hoaFee" className="block text-sm text-gray-600 dark:text-gray-400">
+                  Annual HOA Fee
+                </label>
+                <span className="text-sm text-gray-500 dark:text-gray-400">
+                  {formatCurrency(mortgageDetails.hoaFee)}
+                </span>
+              </div>
+              <input
+                type="number"
+                id="hoaFee"
+                value={mortgageDetails.hoaFee}
+                onChange={(e) => updateMortgageDetails({ hoaFee: Number(e.target.value) })}
+                className="input-field"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { MortgageDetails, AmortizationScheduleItem } from '../types';
 
 export function calculateMortgage(details: MortgageDetails) {
-  const { loanAmount, interestRate, loanTerm, propertyTax, homeInsurance, pmi } = details;
+  const { loanAmount, interestRate, loanTerm, propertyTax, homeInsurance, pmi, hoaFee } = details;
   
   // Monthly interest rate
   const monthlyRate = interestRate / 100 / 12;
@@ -23,8 +23,11 @@ export function calculateMortgage(details: MortgageDetails) {
   // Monthly PMI
   const monthlyPMI = pmi / 12;
   
+  // Monthly HOA Fee
+  const monthlyHOA = hoaFee / 12;
+  
   // Total monthly payment
-  const totalMonthlyPayment = monthlyPrincipalAndInterest + monthlyPropertyTax + monthlyHomeInsurance + monthlyPMI;
+  const totalMonthlyPayment = monthlyPrincipalAndInterest + monthlyPropertyTax + monthlyHomeInsurance + monthlyPMI + monthlyHOA;
   
   // Total payment over the life of the loan
   const totalPayment = totalMonthlyPayment * numberOfPayments;
@@ -38,6 +41,7 @@ export function calculateMortgage(details: MortgageDetails) {
     propertyTax: monthlyPropertyTax,
     homeInsurance: monthlyHomeInsurance,
     pmi: monthlyPMI,
+    hoaFee: monthlyHOA,
     totalPaid: totalPayment,
     totalInterestPaid: totalInterestPaid
   };

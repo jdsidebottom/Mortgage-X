@@ -23,6 +23,7 @@ const defaultMortgageDetails: MortgageDetails = {
   propertyTax: 3000,
   homeInsurance: 1200,
   pmi: 0,
+  hoaFee: 0,
   extraPayments: [],
   startDate: new Date(),
 };
