@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
+import Footer from './Footer';
 import { MortgageProvider } from '../context/MortgageContext';
 
 interface LayoutProps {
@@ -15,15 +16,16 @@ const Layout = ({ children }: LayoutProps) => {
         <Navbar />
         <div className="flex flex-1 overflow-hidden">
           <Sidebar />
-          <main className="flex-1 overflow-auto p-4 md:p-6 lg:p-8">
+          <main className="flex-1 overflow-auto p-4 md:p-6 lg:p-8 flex flex-col">
             <motion.div 
-              className="gradient-bg min-h-full rounded-xl p-4 md:p-6 lg:p-8"
+              className="gradient-bg min-h-full rounded-xl p-4 md:p-6 lg:p-8 flex-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
             >
               {children}
             </motion.div>
+            <Footer />
           </main>
         </div>
       </div>
