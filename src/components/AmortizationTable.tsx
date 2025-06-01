@@ -63,11 +63,53 @@ const AmortizationTable = () => {
     window.print();
   };
 
+  const handleExportCSV = () => {
+    try {
+      // CSV header
+      let csvContent = "Payment #,Date,Payment,Principal,Interest,Extra Payment,Balance\n";
+      
+      // Add each row of data
+      amortizationSchedule.forEach(item => {
+        const formattedDate = formatDate(item.date).replace(/,/g, ''); // Remove commas from dates to avoid CSV issues
+        const row = [
+          item.month,
+          `"${formattedDate}"`, // Wrap in quotes to handle any special characters
+          item.payment.toFixed(2),
+          item.principal.toFixed(2),
+          item.interest.toFixed(2),
+          item.extraPayment.toFixed(2),
+          item.balance.toFixed(2)
+        ].join(",");
+        csvContent += row + "\n";
+      });
+      
+      // Create a blob and download link
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'amortization-schedule.csv');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url); // Clean up by revoking the object URL
+    } catch (error) {
+      console.error("Error exporting CSV:", error);
+      // You could add user feedback here if needed
+    }
+  };
+
   return (
     <div className="card">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">Amortization Schedule</h2>
         <div className="flex space-x-2">
+          <button 
+            onClick={handleExportCSV}
+            className="btn-outline text-sm"
+          >
+            Export CSV
+          </button>
           <button 
             onClick={handleExportPDF}
             className="btn-outline text-sm"
